@@ -2,8 +2,7 @@
 var Generator = require('yeoman-generator');
 
 const path = require('path');
-// const fileUtils = require('./lib/util/file_utils');
-const fileUtils = {};
+const fileUtils = require('./lib/util/file_utils');
 const Adapter = require('./lib/adapter');
 const Factory = require('./lib/factory');
 
@@ -39,13 +38,10 @@ module.exports.getGenerator = (args0, opt) => {
           this.props[option.key] = _this.option[option.key];
         })
       }
-
-      this.props.dependencies = {
-        utils: true
-      }
     }
 
     write () {
+      opt.beforeWrite(this.props);
       const dir = path.join(opt.templateDir)
       const files = fileUtils.readAllFileRecursivelySync(dir)
 

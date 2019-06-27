@@ -1,12 +1,13 @@
 {
   "name": "yo-power-generator",
   "version": "0.0.1",
-  "description": "power generator for yo",
+  "description": "a power generator for yeoman",
   "files": [
     "generators"
   ],
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator",
+    "yeoman"
   ],
   "dependencies": {
     "yeoman-generator": "^1.1.1"

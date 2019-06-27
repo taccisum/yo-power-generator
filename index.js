@@ -31,11 +31,23 @@ module.exports.getGenerator = (args0, opt) => {
 
     async prompting () {
       if (!this.options.command) {
-        this.props = await this.prompt(args0.toPromptings());
+        const answer = await this.prompt(args0.toPromptings());
+
+        const cliOptsStr = Object.keys(answer).map(key => {
+          if (answer[key]) {
+            return `--${key}=${answer[key]}`;
+          }
+        }).filter(val => { return !!val }).join(' ');
+
+        console.log('你也可以使用以下命令来生成脚手架：')
+        console.log(`yo xxx ${cliOptsStr}`);
+
+        this.props = answer;
       } else {
         const _this = this;
+        this.props = {};
         args0.toOptions().forEach(option => {
-          this.props[option.key] = _this.option[option.key];
+          this.props[option.key] = _this.options[option.key];
         })
       }
     }

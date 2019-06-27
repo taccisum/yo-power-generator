@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "a power generator for yeoman",
   "files": [
-    "generators"
+    "lib"
   ],
   "keywords": [
     "yeoman-generator",

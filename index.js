@@ -2,12 +2,13 @@
 var Generator = require('yeoman-generator');
 
 const path = require('path');
-const fileUtils = require('./lib/util/file_utils');
+// const fileUtils = require('./lib/util/file_utils');
+const fileUtils = {};
 const Adapter = require('./lib/adapter');
 const Factory = require('./lib/factory');
 
 module.exports.AbstractTemplateHandler = require('./lib/abstract_template_handler');
-module.exports.FileUtils = require('./lib/util/file_utils');
+module.exports.FileUtils = fileUtils;
 module.exports.getGenerator = (args0, opt) => {
   args0 = new Adapter(args0);
 

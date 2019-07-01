@@ -1,6 +1,6 @@
 {
   "name": "yo-power-generator",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "a power generator for yeoman",
   "files": [
     "lib"

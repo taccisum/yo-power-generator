@@ -43,6 +43,7 @@ describe('file utils', () => {
       assert.strictEqual(fileUtils.tmplToFileName('foo.tmpl_foo'), 'foo')
       assert.strictEqual(fileUtils.tmplToFileName('foo.tmpl_foo.js'), 'foo.js')
       assert.strictEqual(fileUtils.tmplToFileName('.tmpl.foo'), 'foo')
+      assert.strictEqual(fileUtils.tmplToFileName('if_cond.foo.tmpl.js'), 'foo.js')
     })
 
     it('is not template', () => {
@@ -58,6 +59,22 @@ describe('file utils', () => {
       assert(fileUtils.extractTmplType('foo.tmpl_default.js') === 'default');
       assert(fileUtils.extractTmplType('foo.tmpl_foo.js') === 'foo');
       assert(fileUtils.extractTmplType('foo.tmpl_foo_bar.js') === 'foo_bar');
+    });
+  });
+
+  describe('extractConditions()', () => {
+    it('should extract single condition', () => {
+      assert(fileUtils.extractConditions('if_cond.foo.tmpl.js')[0] === 'cond');
+    });
+
+    it('should extract multi condition', () => {
+      assert(fileUtils.extractConditions('if_cond1_cond2.foo.tmpl.js')[0] === 'cond1');
+      assert(fileUtils.extractConditions('if_cond1_cond2.foo.tmpl.js')[1] === 'cond2');
+    });
+
+    it('should ignore empty condition', () => {
+      assert.strictEqual(fileUtils.extractConditions('if_cond1__.foo.tmpl.js').length, 1);
+      assert(fileUtils.extractConditions('if_cond1__.foo.tmpl.js')[0] === 'cond1');
     });
   });
 })

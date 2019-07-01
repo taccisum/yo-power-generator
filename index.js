@@ -5,6 +5,7 @@ const path = require('path');
 const fileUtils = require('./lib/util/file_utils');
 const Adapter = require('./lib/adapter');
 const Factory = require('./lib/factory');
+const debug = require('debug')('pg:generator');
 
 module.exports.AbstractTemplateHandler = require('./lib/abstract_template_handler');
 module.exports.FileUtils = fileUtils;
@@ -50,16 +51,20 @@ module.exports.getGenerator = (args0, opt) => {
           this.props[option.key] = _this.options[option.key];
         })
       }
+      debug(`props: ${JSON.stringify(this.props)}`);
     }
 
     write () {
       opt.beforeWrite(this.props);
       const dir = path.join(opt.templateDir)
       const files = fileUtils.readAllFileRecursivelySync(dir)
+      debug(`all files: ${JSON.stringify(files)}`)
 
       files.forEach(f => {
         if (fileUtils.isTemplate(f)) {
           this.factory.create(f, this, this.props).handle();
+        } else {
+          debug(`file ${f} is not a template.`)
         }
       })
     }

@@ -2,8 +2,8 @@
 
 [![NPM version][npm-image]][npm-url]
 [![npm download][download-image]][download-url]
-[![Build Status](https://www.travis-ci.org/deepexi/yo-power-generator.svg?branch=master)](https://www.travis-ci.org/deepexi/yo-power-generator)
-[![codecov](https://codecov.io/gh/deepexi/yo-power-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/deepexi/yo-power-generator)
+[![Build Status](https://www.travis-ci.org/taccisum/yo-power-generator.svg?branch=master)](https://www.travis-ci.org/deepexi/yo-power-generator)
+[![codecov](https://codecov.io/gh/taccisum/yo-power-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/deepexi/yo-power-generator)
 
 [npm-image]: https://img.shields.io/npm/v/yo-power-generator.svg
 [npm-url]: https://www.npmjs.com/package/yo-power-generator

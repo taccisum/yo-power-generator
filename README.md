@@ -36,3 +36,8 @@ module.exports = require('yo-power-generator').getGenerator(obj, {
   templateDir: path.join(__dirname, 'templates')
 });
 ```
+
+
+## Release Notes
+
+[CHANGELOG](./CHANGELOG.md)

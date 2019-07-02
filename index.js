@@ -52,7 +52,7 @@ module.exports.getGenerator = (args0, opt) => {
         })
       }
       debug(`props: ${JSON.stringify(this.props)}`);
-      opt.afterPropsSet(this.props);
+      opt.afterPropsSet && opt.afterPropsSet(this.props);
     }
 
     write () {

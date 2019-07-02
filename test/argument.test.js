@@ -37,7 +37,6 @@ describe('lib/argument.test.js', () => {
   describe('Argument', () => {
     describe('prompt', () => {
       it('should prompt recusively', async () => {
-        const ls = [];
         const arg = builder(
           /**
            *    l1
@@ -61,15 +60,16 @@ describe('lib/argument.test.js', () => {
             }
           }, {
             prompt (prompting) {
-              ls.push(prompting.msg);
+              return {
+                [prompting.name]: prompting.msg
+              }
             }
           })
-        await arg.prompt();
-        assert(ls.length === 4);
-        assert(ls[0] === 'l1');
-        assert(ls[1] === 'l2');
-        assert(ls[2] === 'l3');
-        assert(ls[3] === 'l3_1');
+        const ls = await arg.prompt();
+        assert(ls.l1 === 'l1');
+        assert(ls.l2 === 'l2');
+        assert(ls.l3 === 'l3');
+        assert(ls.l3_1 === 'l3_1');
       });
     });
 
@@ -98,6 +98,10 @@ describe('lib/argument.test.js', () => {
         })
         const options = arg.options();
         assert.strictEqual(options.length, 4);
+        assert.strictEqual(options[0].key, 'l1');
+        assert.strictEqual(options[1].key, 'l2');
+        assert.strictEqual(options[2].key, 'l3');
+        assert.strictEqual(options[3].key, 'l3_1');
       });
     });
   });

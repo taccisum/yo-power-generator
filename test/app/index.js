@@ -2,9 +2,8 @@
 const path = require('path');
 
 const obj = {
-  groupId: {
-    prompting: { type: 'input', message: '请输入你的group id', default: 'com.deepexi' },
-    option: { desc: 'group id', type: String, default: 'com.deepexi' }
+  cond: {
+    prompting: { type: 'confirm', message: 'cond', default: true }
   }
 }
 

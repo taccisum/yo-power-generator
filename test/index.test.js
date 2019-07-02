@@ -21,15 +21,11 @@ describe('index.test.js', () => {
     before(() => {
       return helpers
         .run(path.join(__dirname, './app'))
-        .withPrompts({
-          groupId: 'com.deepexi'
-        })
         .then(() => {
+          yoassert.file('1.js')
+          yoassert.file('2.js')
+          yoassert.noFile('3.js')
         })
-    });
-
-    it('should exists file', () => {
-      yoassert.file('1.js')
     });
   });
 });

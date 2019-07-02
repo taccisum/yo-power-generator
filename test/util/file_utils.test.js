@@ -76,5 +76,9 @@ describe('file utils', () => {
       assert.strictEqual(fileUtils.extractConditions('if_cond1__.foo.tmpl.js').length, 1);
       assert(fileUtils.extractConditions('if_cond1__.foo.tmpl.js')[0] === 'cond1');
     });
+
+    it('should support condition with \'-\'', () => {
+      assert(fileUtils.extractConditions('if_cond-1.foo.tmpl.js')[0] === 'cond-1');
+    });
   });
 })

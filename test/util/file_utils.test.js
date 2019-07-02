@@ -44,6 +44,7 @@ describe('file utils', () => {
       assert.strictEqual(fileUtils.tmplToFileName('foo.tmpl_foo.js'), 'foo.js')
       assert.strictEqual(fileUtils.tmplToFileName('.tmpl.foo'), 'foo')
       assert.strictEqual(fileUtils.tmplToFileName('if_cond.foo.tmpl.js'), 'foo.js')
+      assert.strictEqual(fileUtils.tmplToFileName('if_cond-1.foo.tmpl.js'), 'foo.js')
     })
 
     it('is not template', () => {
@@ -78,7 +79,8 @@ describe('file utils', () => {
     });
 
     it('should support condition with \'-\'', () => {
-      assert(fileUtils.extractConditions('if_cond-1.foo.tmpl.js')[0] === 'cond-1');
+      assert(fileUtils.extractConditions('if_cond-1_cond-2.foo.tmpl.js')[0] === 'cond-1');
+      assert(fileUtils.extractConditions('if_cond-1_cond-2.foo.tmpl.js')[1] === 'cond-2');
     });
   });
 })

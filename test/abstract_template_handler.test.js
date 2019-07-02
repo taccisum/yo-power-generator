@@ -26,5 +26,15 @@ describe('lib/abstract_template_handler.test.js', () => {
       const handler = new AbstractTemplateHandler('if_cond.tmpl.js', undefined, { cond: {} })
       assert(handler._ignore() === false);
     });
+
+    it('should not ignore on all conditions match', () => {
+      const handler = new AbstractTemplateHandler('if_cond1_cond2.tmpl.js', undefined, { cond1: true, cond2: true })
+      assert(handler._ignore() === false);
+    });
+
+    it('should not ignore on any condition not match', () => {
+      const handler = new AbstractTemplateHandler('if_cond1_cond2.tmpl.js', undefined, { cond1: true, cond2: false })
+      assert(handler._ignore() === true);
+    });
   });
 });

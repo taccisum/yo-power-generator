@@ -20,12 +20,15 @@ describe('index.test.js', () => {
   describe('simple generator', () => {
     it('should generate files', () => {
       return helpers
-        .run(path.join(__dirname, './app'))
+        .run(path.join(__dirname, './apps/simple'))
         .then(() => {
           yoassert.file('1.js')
           yoassert.file('2.js')
           yoassert.noFile('3.js')
         })
     });
+  });
+
+  describe('complex generator', () => {
   });
 });

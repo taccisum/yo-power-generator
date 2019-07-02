@@ -7,7 +7,7 @@ const obj = {
   }
 }
 
-module.exports = require('../../index').getGenerator(obj, {
+module.exports = require('../../../index').getGenerator(obj, {
   handlerDir: path.join(__dirname, 'handler'),
   templateDir: path.join(__dirname, 'templates')
 });

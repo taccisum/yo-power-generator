@@ -59,13 +59,14 @@ describe('lib/argument.test.js', () => {
               }
             }
           }, {
-            prompt (prompting) {
+            async prompt (prompting) {
               return {
                 [prompting.name]: prompting.msg
               }
             }
           })
         const ls = await arg.prompt();
+        console.log(ls);
         assert(ls.l1 === 'l1');
         assert(ls.l2 === 'l2');
         assert(ls.l3 === 'l3');

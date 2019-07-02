@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/deepexi/yo-power-generator/compare/v0.2.0...v0.3.0) (2019-07-02)
+
+
+### Bug Fixes
+
+* error if statement ([7303da9](https://github.com/deepexi/yo-power-generator/commit/7303da9))
+* error if statement ([608f6e5](https://github.com/deepexi/yo-power-generator/commit/608f6e5))
+
+
+### Features
+
+* support condition from props.conditions ([6f93dee](https://github.com/deepexi/yo-power-generator/commit/6f93dee))
+* support condition with '-' ([9aaf4b4](https://github.com/deepexi/yo-power-generator/commit/9aaf4b4))
+* support condition with '-' for tmplToFileName ([c88152e](https://github.com/deepexi/yo-power-generator/commit/c88152e))
+
+
+### Tests
+
+* add test cases for abstract template handler ([1eaaab7](https://github.com/deepexi/yo-power-generator/commit/1eaaab7))
+
+
+
 ## [0.2.0](https://github.com/deepexi/yo-power-generator/compare/v0.1.0...v0.2.0) (2019-07-02)
 
 

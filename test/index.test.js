@@ -18,7 +18,7 @@ describe('index.test.js', () => {
   });
 
   describe('simple generator', () => {
-    before(() => {
+    it('should generate files', () => {
       return helpers
         .run(path.join(__dirname, './app'))
         .then(() => {

@@ -43,6 +43,7 @@ module.exports.getGenerator = (args0, opt) => {
         console.log(`yo xxx ${cliOptsStr}`);
 
         this.props = answer;
+        this.props.commnad = true;
       } else {
         const _this = this;
         this.props = {};

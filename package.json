@@ -45,12 +45,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepexi/yo-power-generator.git"
+    "url": "git+https://github.com/taccisum/yo-power-generator.git"
   },
   "bugs": {
-    "url": "https://github.com/deepexi/yo-power-generator/issues"
+    "url": "https://github.com/taccisum/yo-power-generator/issues"
   },
-  "homepage": "https://github.com/deepexi/yo-power-generator#readme",
+  "homepage": "https://github.com/taccisum/yo-power-generator#readme",
   "author": "taccisum",
   "license": "ISC"
 }

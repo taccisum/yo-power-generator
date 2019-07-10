@@ -30,27 +30,32 @@ module.exports.getGenerator = (args0, opt) => {
     };
 
     async prompting () {
+      let cliOptsStr = '';
       if (!this.options.command) {
         const answer = await this.argument.prompt();
 
-        const cliOptsStr = Object.keys(answer).map(key => {
+        cliOptsStr = Object.keys(answer).map(key => {
           if (answer[key]) {
             return `--${key}=${answer[key]}`;
           }
         }).filter(val => { return !!val }).join(' ');
 
-        console.log('你也可以使用以下命令来生成脚手架：')
-        console.log(`yo xxx ${cliOptsStr}`);
-
         this.props = answer;
-        this.props.commnad = true;
+        this.props.mode = 'command';
       } else {
         const _this = this;
         this.props = {};
+
         this.argument.options().forEach(option => {
-          this.props[option.key] = _this.options[option.key];
+          const key = option.key;
+          const val = _this.options[option.key];
+          cliOptsStr += ` --${key}=${val}`
+          this.props[key] = val;
         })
+        this.props.mode = 'interaction';
       }
+      this.props.cli = cliOptsStr.trim();
+
       debug(`props: ${JSON.stringify(this.props)}`);
       opt.afterPropsSet && opt.afterPropsSet(this.props);
     }

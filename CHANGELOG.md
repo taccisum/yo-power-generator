@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/deepexi/yo-power-generator/compare/v0.3.0...v0.4.0) (2019-07-10)
+
+
+### Bug Fixes
+
+* reversed props.mode ([77c7dd6](https://github.com/deepexi/yo-power-generator/commit/77c7dd6))
+
+
+### Features
+
+* add command to props ([aafa088](https://github.com/deepexi/yo-power-generator/commit/aafa088))
+* append generator mode and cli string to props ([149564e](https://github.com/deepexi/yo-power-generator/commit/149564e))
+
+
+
 ## [0.3.0](https://github.com/deepexi/yo-power-generator/compare/v0.2.0...v0.3.0) (2019-07-02)
 
 

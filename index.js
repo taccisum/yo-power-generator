@@ -41,7 +41,7 @@ module.exports.getGenerator = (args0, opt) => {
         }).filter(val => { return !!val }).join(' ');
 
         this.props = answer;
-        this.props.mode = 'command';
+        this.props.mode = 'interaction';
       } else {
         const _this = this;
         this.props = {};
@@ -52,7 +52,7 @@ module.exports.getGenerator = (args0, opt) => {
           cliOptsStr += ` --${key}=${val}`
           this.props[key] = val;
         })
-        this.props.mode = 'interaction';
+        this.props.mode = 'command';
       }
       this.props.cli = cliOptsStr.trim();
 

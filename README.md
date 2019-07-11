@@ -139,7 +139,7 @@ const args = {
 - 以.tmpl开头：`.tmpl.Dockerfile` -> `Dockerfile`
 - 以tmpl结尾：`.gitignore.tmpl` -> `.gitignore`
 
-每个模板文件还可以指定其对应的Template Handler，如果未指定（如上述例子），则采用[默认Temaplte Handler](#默认Template\ Handler)进行处理。
+每个模板文件还可以指定其对应的Template Handler，如果未指定（如上述例子），则采用[默认Temaplte Handler](#默认Template%20Handler)进行处理。
 
 以下举例了会使用指定handler进行处理的模板的文件名，及其渲染后的名称
 
@@ -159,14 +159,39 @@ pg为你提供了默认的handler，你也可以定制自己的handler。
 
 #### 默认Handler
 
-#### 定制Handler
+默认的Handler将使用[loadsh](https://lodash.com/)的模板功能来处理模板内容。
 
-#### Handler基类
+#### 自定义Handler
+
+自定义的Handler需要放在`handlerDir`指定的目录下，格式如下
+
+```js
+'use strict';
+
+const AbstractTemplateHandler = require('yo-power-generator').AbstractTemplateHandler;
+
+class MyTemplateHandler extends AbstractTemplateHandler {
+  _handle0 () {
+    // do something here
+  }
+}
+
+module.exports = {
+  key: 'custom',
+  cls: MyTemplateHandler
+};
+```
 
 ### 常用工具类
 
 #### File Utils
 
+`FileUtils`提供了一些常用的工具方法，如将模板名称转换为文件名等，引入方式如下
+
+```js
+const fileUtils = require('yo-power-generator').FileUtils;
+// do something with fileUtils
+```
 
 ## Release Notes
 

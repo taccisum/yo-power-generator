@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/taccisum/yo-power-generator/compare/v0.4.0...v0.4.1) (2019-07-11)
+
+
+
 ## [0.4.0](https://github.com/deepexi/yo-power-generator/compare/v0.3.0...v0.4.0) (2019-07-10)
 
 

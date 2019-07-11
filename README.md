@@ -139,7 +139,7 @@ const args = {
 - 以.tmpl开头：`.tmpl.Dockerfile` -> `Dockerfile`
 - 以tmpl结尾：`.gitignore.tmpl` -> `.gitignore`
 
-每个模板文件还可以指定其对应的Template Handler，如果未指定（如上述例子），则采用[默认Temaplte Handler](#默认Template%20Handler)进行处理。
+每个模板文件还可以指定其对应的Template Handler，如果未指定（如上述例子），则采用[默认Temaplte Handler](#默认Handler)进行处理。
 
 以下举例了会使用指定handler进行处理的模板的文件名，及其渲染后的名称
 

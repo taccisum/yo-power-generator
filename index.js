@@ -9,6 +9,7 @@ const debug = require('debug')('pg:generator');
 const process = require('process');
 
 module.exports.Trigger = {
+  AbstractTrigger: require('./lib/abstract_trigger'),
   AnswerTrigger: require('./lib/trigger/answer_trigger')
 };
 module.exports.AbstractTemplateHandler = require('./lib/abstract_template_handler');

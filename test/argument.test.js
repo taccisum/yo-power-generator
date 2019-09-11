@@ -2,6 +2,8 @@
 'use strict'
 const builder = require('../lib/argument').builder;
 const assert = require('assert');
+const toForm = require('../lib/argument').toForm;
+const AnswerTrigger = require('../lib/trigger/answer_trigger');
 
 describe('lib/argument.test.js', () => {
   describe('builder', () => {
@@ -32,6 +34,44 @@ describe('lib/argument.test.js', () => {
     assert.strictEqual(arg.children[0].children[0].name, 'l2')
     assert.strictEqual(arg.children[0].children[0].children[0].name, 'l3')
     assert.strictEqual(arg.children[0].children[0].children[1].name, 'l3_1')
+  });
+
+  describe('toForm', () => {
+    const form = toForm({
+      groupId: {
+        prompting: { type: 'input', message: '请输入你的group id', default: 'com.deepexi' },
+        option: { desc: 'group id', type: String }
+      },
+      discovery: {
+        prompting: { type: 'list', choices: ['zookeeper', 'nacos'], message: '请选择你使用的注册中心' },
+        option: { desc: '注册中心', type: String, default: 'zookeeper' }
+      },
+      db: {
+        prompting: {
+          type: 'list',
+          choices: ['mysql', 'none'],
+          message: '请选择你使用的数据库'
+        },
+        option: { desc: '数据库', type: String, default: 'none' },
+        child: {
+          dbPool: {
+            prompting: { type: 'list', choices: ['druid', 'default'], message: '请选择你使用的数据库连接池' },
+            option: { desc: '数据库连接池', type: String, default: 'none' },
+            callbacks: {
+              trigger: [
+                new AnswerTrigger('db', 'mysql')
+              ]
+            }
+          }
+        }
+      }
+    })
+
+    assert(form)
+    assert.strictEqual(form.groupId.default, 'com.deepexi')
+    assert.strictEqual(form.discovery.default, 'zookeeper')
+    assert.strictEqual(form.db.default, 'none')
+    assert.strictEqual(form.db.child.dbPool.trigger[0].type, 'answerTrigger')
   });
 
   describe('Argument', () => {

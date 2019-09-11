@@ -1,7 +1,6 @@
 'use strict'
 var Generator = require('yeoman-generator');
 
-const _ = require('lodash');
 const path = require('path');
 const fileUtils = require('./lib/util/file_utils');
 const Argument = require('./lib/argument');
@@ -31,15 +30,19 @@ module.exports.getGenerator = (info, options, opt) => {
       this.factory = new Factory(opt.handlerDir);
     }
 
+    catch (e) {
+
+    }
+
     async prompting () {
       if (this.options.description) {
-        this.log(info.description);
+        console.log(info.description);
         process.exit();
       }
 
       if (this.options.form) {
-        const form = this._toForm(options);
-        this.log(JSON.stringify(form));
+        const form = Argument.toForm(options);
+        console.log(JSON.stringify(form));
         process.exit();
       }
 
@@ -85,33 +88,6 @@ module.exports.getGenerator = (info, options, opt) => {
           debug(`file ${f} is not a template.`)
         }
       })
-    }
-
-    _toForm (opt) {
-      const form = {};
-      Object.keys(opt).forEach(key => {
-        const val = opt[key];
-        if (_.isEmpty(val)) {
-          return;
-        }
-        form[key] = val.prompting;
-        if (val.option) {
-          const defaultVal = val.option.default;
-          if (!_.isEmpty(defaultVal)) {
-            form[key].default = defaultVal;
-          }
-        }
-        if (val.callbacks && _.isArray(val.callbacks.trigger)) {
-          form[key].trigger = [];
-          for (const trigger of val.callbacks.trigger) {
-            form[key].trigger.push(trigger.toForm());
-          }
-        }
-        if (val.child) {
-          form[key].child = this._toForm(val.child);
-        }
-      });
-      return form;
     }
   }
 }

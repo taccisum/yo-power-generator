@@ -14,7 +14,7 @@ module.exports.Trigger = {
 };
 module.exports.AbstractTemplateHandler = require('./lib/abstract_template_handler');
 module.exports.FileUtils = fileUtils;
-module.exports.getGenerator = (info, options, opt) => {
+module.exports.getGenerator = (options, opt) => {
   return class extends Generator {
     constructor (args, opts) {
       super(args, opts);
@@ -37,7 +37,7 @@ module.exports.getGenerator = (info, options, opt) => {
 
     async prompting () {
       if (this.options.description) {
-        console.log(info.description);
+        console.log(opt.description);
         process.exit();
       }
 

@@ -2,8 +2,7 @@
 'use strict'
 const builder = require('../lib/argument').builder;
 const assert = require('assert');
-const toForm = require('../lib/argument').toForm;
-const AnswerTrigger = require('../lib/trigger/answer_trigger');
+const AnswerTrigger = require('../lib/trigger/any_answer_trigger');
 
 describe('lib/argument.test.js', () => {
   describe('builder', () => {
@@ -37,7 +36,7 @@ describe('lib/argument.test.js', () => {
   });
 
   describe('toForm', () => {
-    const form = toForm({
+    const arg = builder({
       groupId: {
         prompting: { type: 'input', message: '请输入你的group id', default: 'com.deepexi' },
         option: { desc: 'group id', type: String }
@@ -66,12 +65,13 @@ describe('lib/argument.test.js', () => {
         }
       }
     })
+    const form = arg.toForm();
 
     assert(form)
     assert.strictEqual(form.groupId.default, 'com.deepexi')
     assert.strictEqual(form.discovery.default, 'zookeeper')
     assert.strictEqual(form.db.default, 'none')
-    assert.strictEqual(form.db.child.dbPool.trigger[0].type, 'answerTrigger')
+    assert.strictEqual(form.db.child.dbPool.trigger[0].type, 'anyAnswerTrigger')
   });
 
   describe('Argument', () => {
@@ -112,6 +112,43 @@ describe('lib/argument.test.js', () => {
         assert(ls.l3 === 'l3');
         assert(ls.l3_1 === 'l3_1');
       });
+    });
+
+    it('trigger', async () => {
+      const arg = builder({
+        l1: {
+          prompting: { msg: 'l1' },
+          child: {
+            l2: {
+              prompting: { msg: 'l2' },
+              callbacks: {
+                trigger (answers) {
+                  return answers.l1 === 'other';
+                }
+              }
+            },
+            l3: {
+              prompting: { msg: 'l3' },
+              callbacks: {
+                trigger: [
+                  new AnswerTrigger('l1', 'other')
+                ]
+              }
+            }
+          }
+        }
+      }, {
+        async prompt (prompting) {
+          return {
+            [prompting.name]: prompting.msg
+          }
+        }
+      })
+      const ls = await arg.prompt();
+      console.log(ls);
+      assert(ls.l1 === 'l1');
+      assert(ls.l2 === undefined);
+      assert(ls.l3 === undefined);
     });
 
     describe('options', () => {

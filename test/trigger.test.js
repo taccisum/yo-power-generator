@@ -3,19 +3,19 @@
 
 const assert = require('assert');
 
-const AnswerTrigger = require('../lib/trigger/answer_trigger');
+const AnyAnswerTrigger = require('../lib/trigger/any_answer_trigger');
 
 describe('lib/trigger', () => {
-  describe('answer_trigger.js', () => {
+  describe('any_answer_trigger.js', () => {
     it('isTrigger result should is true', () => {
-      const trigger = new AnswerTrigger('db', 'mysql', 'mongo');
+      const trigger = new AnyAnswerTrigger('db', 'mysql', 'mongo');
       assert(trigger.isTrigger({ db: 'mysql' }) === true);
     });
 
     it('toForm result should is right', () => {
-      const trigger = new AnswerTrigger('db', 'mysql', 'mongo');
+      const trigger = new AnyAnswerTrigger('db', 'mysql', 'mongo');
       const form = trigger.toForm();
-      assert.strictEqual(form.type, 'answerTrigger');
+      assert.strictEqual(form.type, 'anyAnswerTrigger');
     });
   });
 });

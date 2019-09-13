@@ -10,15 +10,15 @@ const process = require('process');
 
 module.exports.Trigger = {
   AbstractTrigger: require('./lib/abstract_trigger'),
-  AnswerTrigger: require('./lib/trigger/answer_trigger')
+  AnyAnswerTrigger: require('./lib/trigger/any_answer_trigger')
 };
 module.exports.AbstractTemplateHandler = require('./lib/abstract_template_handler');
 module.exports.FileUtils = fileUtils;
-module.exports.getGenerator = (options, opt) => {
+module.exports.getGenerator = (args0, opt) => {
   return class extends Generator {
     constructor (args, opts) {
       super(args, opts);
-      this.argument = Argument.builder(options, this);
+      this.argument = Argument.builder(args0, this);
       const _this = this;
 
       this.option('command', { desc: '使用命令模式（非交互操作）', alias: 'c', type: Boolean, default: false });
@@ -42,7 +42,7 @@ module.exports.getGenerator = (options, opt) => {
       }
 
       if (this.options.form) {
-        const form = Argument.toForm(options);
+        const form = this.argument.toForm();
         console.log(JSON.stringify(form));
         process.exit();
       }

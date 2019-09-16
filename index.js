@@ -6,7 +6,6 @@ const fileUtils = require('./lib/util/file_utils');
 const Argument = require('./lib/argument');
 const Factory = require('./lib/factory');
 const debug = require('debug')('pg:generator');
-const process = require('process');
 
 module.exports.Trigger = {
   AbstractTrigger: require('./lib/abstract_trigger'),
@@ -37,14 +36,14 @@ module.exports.getGenerator = (args0, opt) => {
 
     async prompting () {
       if (this.options.description) {
-        console.log(opt.description);
-        process.exit();
+        this.log(opt.description);
+        return;
       }
 
       if (this.options.form) {
         const form = this.argument.toForm();
-        console.log(JSON.stringify(form));
-        process.exit();
+        this.log(JSON.stringify(form));
+        return;
       }
 
       let cliOptsStr = '';
@@ -78,6 +77,10 @@ module.exports.getGenerator = (args0, opt) => {
     }
 
     write () {
+      if (this.options.description || this.options.form) {
+        return;
+      }
+
       const dir = path.join(opt.templateDir)
       const files = fileUtils.readAllFileRecursivelySync(dir)
       debug(`all files: ${JSON.stringify(files)}`)

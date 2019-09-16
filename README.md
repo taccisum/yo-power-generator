@@ -38,6 +38,7 @@ const args = {
   }
 }
 module.exports = require('yo-power-generator').getGenerator(args, {
+  description: 'This is a scaffold demo'
   handlerDir: path.join(__dirname, 'handler'),
   templateDir: path.join(__dirname, 'templates')
 });
@@ -79,6 +80,18 @@ $ yo {you_generator_name}
 $ cat /tmp/test/foo.js
 ```
 
+通过 `--form` 选项获取到脚手架选项的 JSON 格式表单
+
+```shell
+yo {you_generator_name} --form
+```
+
+通过 `--desc` 选项获取到脚手架的描述信息
+
+```shell
+yo {you_generator_name} --desc
+```
+
 ## References
 
 ### Generator配置
@@ -93,7 +106,7 @@ $ cat /tmp/test/foo.js
 
 ### Generator参数
 
-原yeoman支持的参数分两种：prompting和option。pg对其进行了一些改造，使其使用起来更加容易，并且更加强大。其格式如下
+原 Yeoman 支持的参数分两种：prompting 与 option。pg 对其进行了一些改造，使其使用起来更加容易，并且更加强大。其格式如下：
 
 ```js
 const args = {
@@ -121,7 +134,72 @@ const args = {
 }
 ```
 
-**注意**：子参数必须满足父参数被触发过这个条件才有可能被触发。
+当选项包含 `trigger` 触发器时，只有满足了触发器条件时该选项才会被激活。
+
+`trigger` 除了可以是一个函数，它还可以是一个 **AbstractTrigger** 实例对象的数组，此时只有当数组中的所有触发器的触发条件都为真时该选项才会被激活。
+
+pg 提供了一个 **AnyAnswerTrigger** 触发器，该触发器会校验用户指定选项的答案值，如下面示例中仅在用户数据库 db 选项选择了 mysql 时才激活数据库连接池 dbPool 子选项。
+
+```javascript
+const Trigger = require('yo-power-generator').Trigger;
+const args0 = {
+  db: {
+    prompting: {
+      type: 'list',
+      choices: ['mysql', 'none'],
+      message: '请选择你使用的数据库'
+    },
+    option: { desc: '数据库', type: String, default: 'none' },
+    child: {
+      dbPool: {
+        prompting: { type: 'list', choices: ['druid', 'default'], message: '请选择你使用的数据库连接池' },
+        option: { desc: '数据库连接池', type: String, default: 'none' },
+        callbacks: {
+          trigger: [
+            new Trigger.AnyAnswerTrigger('db', 'mysql')
+          ]
+        }
+      }
+    }
+  }
+};
+```
+
+### 选项触发器 Trigger
+
+你可以继承自 **AbstractTrigger** 实现自定义选项触发器，需要实现两个方法：
+
+- **isTrigger(answers)**：触发逻辑判断，answers 为用户选项所选择答案集
+- **toForm()**：触发器表单格式对象，用于在  `--form` 选项时获取脚手架选项表单
+
+你可以参考 **AnyAnswerTrigger** 触发器的实现：
+
+```javascript
+class AnyAnswerTrigger extends AbstractTrigger {
+  constructor (answer, ...value) {
+    super();
+    this.answer = answer;
+    this.value = value;
+  }
+
+  isTrigger (answers) {
+    if (!answers) {
+      return false;
+    }
+    return this.value.includes(answers[this.answer]);
+  }
+
+  toForm () {
+    return {
+      type: 'anyAnswerTrigger',
+      answer: this.answer,
+      value: [...this.value]
+    };
+  }
+}
+
+module.exports = AnyAnswerTrigger;
+```
 
 ### Template
 
@@ -195,4 +273,4 @@ const fileUtils = require('yo-power-generator').FileUtils;
 
 ## Release Notes
 
-[CHANGELOG](./CHANGELOG.md)
+[CHANGELOG](

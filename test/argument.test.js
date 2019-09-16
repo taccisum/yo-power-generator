@@ -114,6 +114,43 @@ describe('lib/argument.test.js', () => {
       });
     });
 
+    it('should output prompt message hierarchically', async () => {
+      const arg = builder(
+        /**
+         *    l1
+         *     |
+         *    l2
+         *   /   \
+         *  l3  l3_1
+         */
+        {
+          l1: {
+            prompting: { message: 'l1' },
+            child: {
+              l2: {
+                prompting: { message: 'l2' },
+                child: {
+                  l3: { prompting: { message: 'l3' } },
+                  l3_1: { prompting: { message: 'l3_1' } }
+                }
+              }
+            }
+          }
+        }, {
+          async prompt (prompting) {
+            return {
+              [prompting.name]: prompting.message
+            }
+          }
+        })
+      const ls = await arg.prompt();
+      console.log(ls);
+      assert.strictEqual(ls.l1, 'l1');
+      assert.strictEqual(ls.l2, ' > l2');
+      assert.strictEqual(ls.l3, '  > l3');
+      assert.strictEqual(ls.l3_1, '  > l3_1');
+    });
+
     it('trigger', async () => {
       const arg = builder({
         l1: {

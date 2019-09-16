@@ -273,4 +273,4 @@ const fileUtils = require('yo-power-generator').FileUtils;
 
 ## Release Notes
 
-[CHANGELOG](
+[CHANGELOG](./CHANGELOG.md)

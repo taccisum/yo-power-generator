@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/taccisum/yo-power-generator/compare/v0.5.0...v0.5.1) (2019-09-16)
+
+
+### Bug Fixes
+
+* prompting,message will be changed after invoke prompt() ([6d461b6](https://github.com/taccisum/yo-power-generator/commit/6d461b6))
+
+
+
 ## [0.5.0](https://github.com/taccisum/yo-power-generator/compare/v0.4.1...v0.5.0) (2019-09-16)
 
 

@@ -36,13 +36,13 @@ module.exports.getGenerator = (args0, opt) => {
 
     async prompting () {
       if (this.options.description) {
-        this.log(opt.description);
+        console.log(opt.description);
         return;
       }
 
       if (this.options.form) {
         const form = this.argument.toForm();
-        this.log(JSON.stringify(form));
+        console.log(JSON.stringify(form));
         return;
       }
 

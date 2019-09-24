@@ -2,6 +2,7 @@
 'use strict'
 const builder = require('../lib/argument').builder;
 const assert = require('assert');
+const AnswerTrigger = require('../lib/trigger/any_answer_trigger');
 
 describe('lib/argument.test.js', () => {
   describe('builder', () => {
@@ -32,6 +33,45 @@ describe('lib/argument.test.js', () => {
     assert.strictEqual(arg.children[0].children[0].name, 'l2')
     assert.strictEqual(arg.children[0].children[0].children[0].name, 'l3')
     assert.strictEqual(arg.children[0].children[0].children[1].name, 'l3_1')
+  });
+
+  describe('toForm', () => {
+    const arg = builder({
+      groupId: {
+        prompting: { type: 'input', message: '请输入你的group id', default: 'com.deepexi' },
+        option: { desc: 'group id', type: String }
+      },
+      discovery: {
+        prompting: { type: 'list', choices: ['zookeeper', 'nacos'], message: '请选择你使用的注册中心' },
+        option: { desc: '注册中心', type: String, default: 'zookeeper' }
+      },
+      db: {
+        prompting: {
+          type: 'list',
+          choices: ['mysql', 'none'],
+          message: '请选择你使用的数据库'
+        },
+        option: { desc: '数据库', type: String, default: 'none' },
+        child: {
+          dbPool: {
+            prompting: { type: 'list', choices: ['druid', 'default'], message: '请选择你使用的数据库连接池' },
+            option: { desc: '数据库连接池', type: String, default: 'none' },
+            callbacks: {
+              trigger: [
+                new AnswerTrigger('db', 'mysql')
+              ]
+            }
+          }
+        }
+      }
+    })
+    const form = arg.toForm();
+
+    assert(form)
+    assert.strictEqual(form.groupId.default, 'com.deepexi')
+    assert.strictEqual(form.discovery.default, 'zookeeper')
+    assert.strictEqual(form.db.default, 'none')
+    assert.strictEqual(form.db.child.dbPool.trigger[0].type, 'anyAnswerTrigger')
   });
 
   describe('Argument', () => {
@@ -72,6 +112,80 @@ describe('lib/argument.test.js', () => {
         assert(ls.l3 === 'l3');
         assert(ls.l3_1 === 'l3_1');
       });
+    });
+
+    it('should output prompt message hierarchically', async () => {
+      const arg = builder(
+        /**
+         *    l1
+         *     |
+         *    l2
+         *   /   \
+         *  l3  l3_1
+         */
+        {
+          l1: {
+            prompting: { message: 'l1' },
+            child: {
+              l2: {
+                prompting: { message: 'l2' },
+                child: {
+                  l3: { prompting: { message: 'l3' } },
+                  l3_1: { prompting: { message: 'l3_1' } }
+                }
+              }
+            }
+          }
+        }, {
+          async prompt (prompting) {
+            return {
+              [prompting.name]: prompting.message
+            }
+          }
+        })
+      const ls = await arg.prompt();
+      console.log(ls);
+      assert.strictEqual(ls.l1, 'l1');
+      assert.strictEqual(ls.l2, ' > l2');
+      assert.strictEqual(ls.l3, '  > l3');
+      assert.strictEqual(ls.l3_1, '  > l3_1');
+    });
+
+    it('trigger', async () => {
+      const arg = builder({
+        l1: {
+          prompting: { msg: 'l1' },
+          child: {
+            l2: {
+              prompting: { msg: 'l2' },
+              callbacks: {
+                trigger (answers) {
+                  return answers.l1 === 'other';
+                }
+              }
+            },
+            l3: {
+              prompting: { msg: 'l3' },
+              callbacks: {
+                trigger: [
+                  new AnswerTrigger('l1', 'other')
+                ]
+              }
+            }
+          }
+        }
+      }, {
+        async prompt (prompting) {
+          return {
+            [prompting.name]: prompting.msg
+          }
+        }
+      })
+      const ls = await arg.prompt();
+      console.log(ls);
+      assert(ls.l1 === 'l1');
+      assert(ls.l2 === undefined);
+      assert(ls.l3 === undefined);
     });
 
     describe('options', () => {

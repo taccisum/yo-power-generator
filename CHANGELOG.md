@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/taccisum/yo-power-generator/compare/v0.5.1...v0.5.2) (2019-09-19)
+
+
+### Bug Fixes
+
+* use console.log instead generator.log ([84879f1](https://github.com/taccisum/yo-power-generator/commit/84879f1))
+
+
+
+### [0.5.1](https://github.com/taccisum/yo-power-generator/compare/v0.5.0...v0.5.1) (2019-09-16)
+
+
+### Bug Fixes
+
+* prompting,message will be changed after invoke prompt() ([6d461b6](https://github.com/taccisum/yo-power-generator/commit/6d461b6))
+
+
+
+## [0.5.0](https://github.com/taccisum/yo-power-generator/compare/v0.4.1...v0.5.0) (2019-09-16)
+
+
+### Features
+
+* support options '--f', '--desc' and prompting layout ([#1](https://github.com/taccisum/yo-power-generator/issues/1)) ([587b0d3](https://github.com/taccisum/yo-power-generator/commit/587b0d3))
+
+
+### Tests
+
+* add test cases ([2e530a7](https://github.com/taccisum/yo-power-generator/commit/2e530a7))
+
+
+
 ### [0.4.1](https://github.com/taccisum/yo-power-generator/compare/v0.4.0...v0.4.1) (2019-07-11)
 
 

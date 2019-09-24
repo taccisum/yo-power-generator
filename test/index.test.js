@@ -31,4 +31,28 @@ describe('index.test.js', () => {
 
   describe('complex generator', () => {
   });
+
+  describe('common options', () => {
+    it('should output generator description on option --desc', () => {
+      return helpers
+        .run(path.join(__dirname, './apps/simple'))
+        .withOptions({
+          '--desc': '1'
+        })
+        .then(() => {
+          assert.noFile('1.js')
+        })
+    });
+
+    it('should output form description on option -', () => {
+      return helpers
+        .run(path.join(__dirname, './apps/simple'))
+        .withOptions({
+          '-f': '1'
+        })
+        .then(() => {
+          assert.noFile('1.js')
+        })
+    });
+  });
 });

@@ -214,7 +214,7 @@ new Trigger.NoAnyAnswerTrigger('db', 'mysql')
 - **isTrigger(answers)**：触发逻辑判断，answers 为用户选项所选择答案集
 - **toForm()**：触发器表单格式对象，用于在  `--form` 选项时获取脚手架选项表单
 
-你可以参考 **AnyAnswerTrigger** 触发器的实现：
+示例如下
 
 ```javascript
 const Trigger = require('yo-power-generator').Trigger;

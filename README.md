@@ -134,11 +134,17 @@ const args = {
 }
 ```
 
+#### 触发器
+
 当选项包含 `trigger` 触发器时，只有满足了触发器条件时该选项才会被激活。
 
 `trigger` 除了可以是一个函数，它还可以是一个 **AbstractTrigger** 实例对象的数组，此时只有当数组中的所有触发器的触发条件都为真时该选项才会被激活。
 
-pg 提供了一个 **AnyAnswerTrigger** 触发器，该触发器会校验用户指定选项的答案值，如下面示例中仅在用户数据库 db 选项选择了 mysql 时才激活数据库连接池 dbPool 子选项。
+pg内置了一些常用的触发器
+
+##### AnyAnswerTrigger
+
+**AnyAnswerTrigger** 触发器会校验用户指定选项的答案值，如下面示例中仅在用户数据库 db 选项选择了 mysql 时才激活数据库连接池 dbPool 子选项。
 
 ```javascript
 const Trigger = require('yo-power-generator').Trigger;
@@ -165,7 +171,43 @@ const args0 = {
 };
 ```
 
-### 选项触发器 Trigger
+其使用方式如下
+
+```js
+new Trigger.AnyAnswerTrigger('db', 'mysql')
+```
+
+相应的表单描述
+
+```json
+{
+  "type": "anyAnswerTrigger",
+  "answer": "db",
+  "value": ["mysql"]
+}
+```
+
+##### NoAnyAnswerTrigger
+
+**NoAnyAnswerTrigger** 触发器则刚好与[AnyAnswerTrigger](#anyanswertrigger)相反，它会校用户指定选项的答案，与你指定的任何一个值都不匹配时才会触发。
+
+使用方式如下
+
+```js
+new Trigger.NoAnyAnswerTrigger('db', 'mysql')
+```
+
+相应的表单描述
+
+```json
+{
+  "type": "noAnyAnswerTrigger",
+  "answer": "db",
+  "value": ["mysql"]
+}
+```
+
+##### 实现你自己的触发器
 
 你可以继承自 **AbstractTrigger** 实现自定义选项触发器，需要实现两个方法：
 
@@ -175,25 +217,19 @@ const args0 = {
 你可以参考 **AnyAnswerTrigger** 触发器的实现：
 
 ```javascript
-class AnyAnswerTrigger extends AbstractTrigger {
-  constructor (answer, ...value) {
+const Trigger = require('yo-power-generator').Trigger;
+class FooTrigger extends Trigger.AbstractTrigger {
+  constructor () {
     super();
-    this.answer = answer;
-    this.value = value;
   }
 
   isTrigger (answers) {
-    if (!answers) {
-      return false;
-    }
-    return this.value.includes(answers[this.answer]);
+    return true;
   }
 
   toForm () {
     return {
-      type: 'anyAnswerTrigger',
-      answer: this.answer,
-      value: [...this.value]
+      type: 'fooTrigger'
     };
   }
 }

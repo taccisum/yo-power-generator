@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/taccisum/yo-power-generator/compare/v0.5.1...v0.6.0) (2019-10-10)
+
+
+### Bug Fixes
+
+* use console.log instead generator.log ([84879f1](https://github.com/taccisum/yo-power-generator/commit/84879f1))
+
+
+### Features
+
+* provide NoAnyAnswerTrigger ([#8](https://github.com/taccisum/yo-power-generator/issues/8)) ([e12ef82](https://github.com/taccisum/yo-power-generator/commit/e12ef82))
+
+
+
 ### [0.5.2](https://github.com/taccisum/yo-power-generator/compare/v0.5.1...v0.5.2) (2019-09-19)
 
 

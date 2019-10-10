@@ -28,6 +28,11 @@ describe('trigger/no_any_answer_trigger.test.js', () => {
         db: 'mongo'
       }), false);
     });
+    it('should not trigger on answer null', () => {
+      const trigger = new NoAnyAnswerTrigger('db', 'mysql', 'mongo');
+      assert.strictEqual(trigger.isTrigger(null), false);
+      assert.strictEqual(trigger.isTrigger({}), false);
+    });
   });
   describe('toForm()', () => {
     const trigger = new NoAnyAnswerTrigger('db', 'mysql', 'mongo');

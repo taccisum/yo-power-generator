@@ -167,7 +167,7 @@ const args0 = {
 
 ### 支持 choice 别名显示(key, value 分离)
 
-```json
+```javascript
     prompting: {
       type: 'list',
       choices: [

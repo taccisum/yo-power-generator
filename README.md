@@ -165,6 +165,31 @@ const args0 = {
 };
 ```
 
+### 支持 choice 别名显示(key, value 分离)
+
+```json
+    prompting: {
+      type: 'list',
+      choices: [
+        { key: 'jwt', display: '无状态jwt' },
+        'session',
+        { key: 'none', display: '无'}
+      ],
+      message: '请选择你采用的认证机制类型'
+    }
+```
+
+在交互的时候会显示成
+
+```markdown
+? 请选择你采用的认证机制类型 (Use arrow keys)
+❯ 无状态jwt
+  session
+  无
+```
+
+在选择无状态jwt 后对应的值为 jwt
+
 ### 选项触发器 Trigger
 
 你可以继承自 **AbstractTrigger** 实现自定义选项触发器，需要实现两个方法：

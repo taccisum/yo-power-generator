@@ -46,8 +46,8 @@ describe('lib/argument.test.js', () => {
         option: { desc: '注册中心', type: String, default: 'zookeeper' }
       },
       jwt: {
-        prompting: { type: 'list', choices: [{key: 'jwt', display: '无状态jwt'}, 'session', {key: 'none', display: '无'}], message: '请选择你采用的认证机制类型'},
-        option: { desc: "认证机制", type: String, default: 'jwt'}
+        prompting: { type: 'list', choices: [ { key: 'jwt', display: '无状态jwt' }, 'session', { key: 'none', display: '无' } ], message: '请选择你采用的认证机制类型' },
+        option: { desc: '认证机制', type: String, default: 'jwt' }
       },
       db: {
         prompting: {
@@ -92,7 +92,7 @@ describe('lib/argument.test.js', () => {
            */
           {
             l1: {
-              prompting: { type: 'list', choices: [{key: 'jwt', display: '无状态jwt'}, 'session', {key: 'none', display: '无'}], msg: 'l1'},
+              prompting: { msg: 'l1' },
               child: {
                 l2: {
                   prompting: { msg: 'l2' },
@@ -111,9 +111,31 @@ describe('lib/argument.test.js', () => {
             }
           })
         const ls = await arg.prompt();
+        console.log(ls);
+        assert(ls.l1 === 'l1');
         assert(ls.l2 === 'l2');
         assert(ls.l3 === 'l3');
         assert(ls.l3_1 === 'l3_1');
+      });
+
+      it('should prompt recusively', async () => {
+        const arg = builder(
+          /**
+           *    l1
+           */
+          {
+            l1: {
+              prompting: { type: 'list', choices: [ { key: 'jwt', display: '无状态jwt' }, 'session', { key: 'none', display: '无' } ], msg: 'l1' }
+            }
+          }, {
+            async prompt (prompting) {
+              return {
+                [prompting.name]: prompting.msg
+              }
+            }
+          })
+        const ls = await arg.prompt();
+        console.log(ls);
       });
     });
 

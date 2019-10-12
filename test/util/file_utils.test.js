@@ -11,7 +11,7 @@ describe('file utils', () => {
       const files = fileUtils.readAllFileRecursivelySync(path.join(__dirname, './resources/app'))
       assert(files.includes('index.js'))
       assert(files.includes('README.md'))
-      assert(files.includes('controller/home.js') || files.includes('controller\\home.js'))
+      assert(files.includes(path.join('controller', path.sep, 'home.js')))
     })
   })
 

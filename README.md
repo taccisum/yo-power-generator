@@ -134,6 +134,31 @@ const args = {
 }
 ```
 
+#### 支持 choice 别名显示(key，value 分离)
+
+```javascript
+    prompting: {
+      type: 'list',
+      choices: [
+        { key: 'jwt', display: '无状态jwt' },
+        'session',
+        { key: 'none', display: '无'}
+      ],
+      message: '请选择你采用的认证机制类型'
+    }
+```
+
+在交互的时候会显示成
+
+```markdown
+? 请选择你采用的认证机制类型 (Use arrow keys)
+❯ 无状态jwt
+  session
+  无
+```
+
+在选择无状态jwt 后对应的值为 jwt
+
 #### 触发器
 
 当选项包含 `trigger` 触发器时，只有满足了触发器条件时该选项才会被激活。

@@ -194,9 +194,8 @@ const args0 = {
     }
   }
 };
-```
-
 其使用方式如下
+```
 
 ```js
 new Trigger.AnyAnswerTrigger('db', 'mysql')
@@ -231,6 +230,31 @@ new Trigger.NoAnyAnswerTrigger('db', 'mysql')
   "value": ["mysql"]
 }
 ```
+
+### 支持 choice 别名显示(key, value 分离)
+
+```javascript
+    prompting: {
+      type: 'list',
+      choices: [
+        { key: 'jwt', display: '无状态jwt' },
+        'session',
+        { key: 'none', display: '无'}
+      ],
+      message: '请选择你采用的认证机制类型'
+    }
+```
+
+在交互的时候会显示成
+
+```markdown
+? 请选择你采用的认证机制类型 (Use arrow keys)
+❯ 无状态jwt
+  session
+  无
+```
+
+在选择无状态jwt 后对应的值为 jwt
 
 ##### 实现你自己的触发器
 

@@ -45,6 +45,10 @@ describe('lib/argument.test.js', () => {
         prompting: { type: 'list', choices: ['zookeeper', 'nacos'], message: '请选择你使用的注册中心' },
         option: { desc: '注册中心', type: String, default: 'zookeeper' }
       },
+      jwt: {
+        prompting: { type: 'list', choices: [ { key: 'jwt', display: '无状态jwt' }, 'session', { key: 'none', display: '无' } ], message: '请选择你采用的认证机制类型' },
+        option: { desc: '认证机制', type: String, default: 'jwt' }
+      },
       db: {
         prompting: {
           type: 'list',
@@ -72,6 +76,7 @@ describe('lib/argument.test.js', () => {
     assert.strictEqual(form.discovery.default, 'zookeeper')
     assert.strictEqual(form.db.default, 'none')
     assert.strictEqual(form.db.child.dbPool.trigger[0].type, 'anyAnswerTrigger')
+    assert.strictEqual(form.jwt.default, 'jwt')
   });
 
   describe('Argument', () => {
@@ -111,6 +116,26 @@ describe('lib/argument.test.js', () => {
         assert(ls.l2 === 'l2');
         assert(ls.l3 === 'l3');
         assert(ls.l3_1 === 'l3_1');
+      });
+
+      it('should prompt recusively', async () => {
+        const arg = builder(
+          /**
+           *    l1
+           */
+          {
+            l1: {
+              prompting: { type: 'list', choices: [ { key: 'jwt', display: '无状态jwt' }, 'session', { key: 'none', display: '无' } ], msg: 'l1' }
+            }
+          }, {
+            async prompt (prompting) {
+              return {
+                [prompting.name]: prompting.msg
+              }
+            }
+          })
+        const ls = await arg.prompt();
+        console.log(ls);
       });
     });
 

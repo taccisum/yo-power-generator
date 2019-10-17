@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/taccisum/yo-power-generator/compare/v0.6.0...v0.7.0) (2019-10-17)
+
+
+### Bug Fixes
+
+* invalid multi-level arguments ([#11](https://github.com/taccisum/yo-power-generator/issues/11)) ([822776f](https://github.com/taccisum/yo-power-generator/commit/822776f))
+
+
+### Features
+
+* support choice alias on display ([#6](https://github.com/taccisum/yo-power-generator/issues/6)) ([6d4611a](https://github.com/taccisum/yo-power-generator/commit/6d4611a))
+
+
+
 ## [0.6.0](https://github.com/taccisum/yo-power-generator/compare/v0.5.1...v0.6.0) (2019-10-10)
 
 

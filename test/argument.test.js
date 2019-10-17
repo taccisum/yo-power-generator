@@ -137,6 +137,73 @@ describe('lib/argument.test.js', () => {
         const ls = await arg.prompt();
         console.log(ls);
       });
+
+      it('layouts should prompt recusively', async () => {
+        const arg = builder(
+          /**
+           *    db
+           */
+          {
+            db: {
+              prompting: {
+                type: 'list',
+                choices: [
+                  'mysql',
+                  'none'
+                ],
+                message: '请选择你使用的数据库'
+              },
+              option: { desc: '数据库', type: String, default: 'mysql' },
+              child: {
+                dbPool: {
+                  prompting: {
+                    type: 'list',
+                    choices: [
+                      'druid',
+                      // 'hikari',
+                      'default'
+                    ],
+                    message: '请选择你使用的数据库连接池'
+                  },
+                  option: { desc: '数据库连接池', type: String, default: 'none' },
+                  callbacks: {
+                    trigger: [
+                      new AnswerTrigger('db', 'mysql')
+                    ]
+                  }
+                },
+                orm: {
+                  prompting: {
+                    type: 'list',
+                    choices: [
+                      'mybatis-plus',
+                      'mybatis',
+                      'none'
+                    ],
+                    message: '请选择你使用的ORM框架'
+                  },
+                  option: { desc: 'ORM框架', type: String, default: 'none' },
+                  callbacks: {
+                    trigger: [
+                      new AnswerTrigger('db', 'mysql')
+                    ]
+                  }
+                }
+              }
+            }
+          }, {
+            async prompt (prompting) {
+              return {
+                [prompting.name]: prompting.choices[0]
+              }
+            }
+          })
+        const ls = await arg.prompt();
+        console.log(JSON.stringify(ls));
+        assert(ls.db === 'mysql');
+        assert(ls.dbPool === 'druid');
+        assert(ls.orm === 'mybatis-plus');
+      });
     });
 
     it('should output prompt message hierarchically', async () => {

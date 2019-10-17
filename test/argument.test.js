@@ -137,6 +137,40 @@ describe('lib/argument.test.js', () => {
         const ls = await arg.prompt();
         console.log(ls);
       });
+
+      it('layouts should prompt recusively', async () => {
+        const arg = builder(
+          /**
+           *    db
+           */
+          {
+            dbPool: {
+              prompting: {
+                type: 'list',
+                choices: [
+                  'druid',
+                  // 'hikari',
+                  'default'
+                ],
+                message: '请选择你使用的数据库连接池'
+              },
+              option: { desc: '数据库连接池', type: String, default: 'none' },
+              callbacks: {
+                trigger: [
+                  new AnswerTrigger('db', 'mysql')
+                ]
+              }
+            }
+          }, {
+            async prompt (prompting) {
+              return {
+                [prompting.name]: prompting.message
+              }
+            }
+          })
+        const ls = await arg.prompt();
+        console.log(ls);
+      });
     });
 
     it('should output prompt message hierarchically', async () => {

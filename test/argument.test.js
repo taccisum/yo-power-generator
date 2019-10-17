@@ -144,21 +144,51 @@ describe('lib/argument.test.js', () => {
            *    db
            */
           {
-            dbPool: {
+            db: {
               prompting: {
                 type: 'list',
                 choices: [
-                  'druid',
-                  // 'hikari',
-                  'default'
+                  'mysql',
+                  'none'
                 ],
-                message: '请选择你使用的数据库连接池'
+                message: '请选择你使用的数据库'
               },
-              option: { desc: '数据库连接池', type: String, default: 'none' },
-              callbacks: {
-                trigger: [
-                  new AnswerTrigger('db', 'mysql')
-                ]
+              option: { desc: '数据库', type: String, default: 'mysql' },
+              child: {
+                dbPool: {
+                  prompting: {
+                    type: 'list',
+                    choices: [
+                      'druid',
+                      // 'hikari',
+                      'default'
+                    ],
+                    message: '请选择你使用的数据库连接池'
+                  },
+                  option: { desc: '数据库连接池', type: String, default: 'none' },
+                  callbacks: {
+                    trigger: [
+                      new AnswerTrigger('db', 'mysql')
+                    ]
+                  }
+                },
+                orm: {
+                  prompting: {
+                    type: 'list',
+                    choices: [
+                      'mybatis-plus',
+                      'mybatis',
+                      'none'
+                    ],
+                    message: '请选择你使用的ORM框架'
+                  },
+                  option: { desc: 'ORM框架', type: String, default: 'none' },
+                  callbacks: {
+                    trigger: [
+                      new AnswerTrigger('db', 'mysql')
+                    ]
+                  }
+                }
               }
             }
           }, {

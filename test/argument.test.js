@@ -194,12 +194,15 @@ describe('lib/argument.test.js', () => {
           }, {
             async prompt (prompting) {
               return {
-                [prompting.name]: prompting.message
+                [prompting.name]: prompting.choices[0]
               }
             }
           })
         const ls = await arg.prompt();
-        console.log(ls);
+        console.log(JSON.stringify(ls));
+        assert(ls.db === 'mysql');
+        assert(ls.dbPool === 'druid');
+        assert(ls.orm === 'mybatis-plus');
       });
     });
 
